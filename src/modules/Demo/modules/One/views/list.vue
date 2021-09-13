@@ -30,7 +30,6 @@ export default {
   methods: {
     onClickCodeError() {
       this.obj.split('')
-      window.postMessage('ceshi')
     },
     onClickShowCount() {
       console.log(`count is:${this.count}`)

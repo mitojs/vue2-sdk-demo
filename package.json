@@ -9,7 +9,7 @@
     "prettier": "prettier --write './*"
   },
   "dependencies": {
-    "@mitojs/web": "^2.1.19",
+    "@mitojs/vue": "^2.1.25",
     "axios": "^0.18.0",
     "element-ui": "^2.13.2",
     "less-loader": "^6.2.0",

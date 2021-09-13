@@ -10,7 +10,6 @@
 import GlobalHeader from '../GlobalHeader'
 import MenuLayout from '../MenuLayout'
 import BlankLayout from '@/layouts/BlankLayout'
-import { log } from '@mitojs/web'
 export default {
   name: 'BaseLayout',
   components: {
@@ -25,10 +24,10 @@ export default {
     }
   },
   created() {
-    log({
-      message: 'MITO.log:vue2.6 demo',
-      tag: 'mitojs vue2.6 demo'
-    })
+    // log({
+    //   message: 'MITO.log:vue2.6 demo',
+    //   tag: 'mitojs vue2.6 demo'
+    // })
   }
 }
 </script>

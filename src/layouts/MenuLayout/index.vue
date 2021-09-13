@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     let iframe = this.$refs.iframe
-    const breadcrumb = window.__MITO__.breadcrumb
+    const breadcrumb = window._MITO_.breadcrumb
     let lastLength = -1
     setInterval(() => {
       const length = breadcrumb.getStack().length
@@ -27,13 +27,14 @@ export default {
         return
       } else {
         lastLength = length
-        iframe.contentWindow && iframe.contentWindow.postMessage(
-          {
-            type: 'breadcrumb',
-            data: JSON.parse(JSON.stringify(breadcrumb.getStack()))
-          },
-          'https://mitojs.github.io/mito-admin-demo/#/breadcrumbDemo'
-        )
+        iframe.contentWindow &&
+          iframe.contentWindow.postMessage(
+            {
+              type: 'breadcrumb',
+              data: JSON.parse(JSON.stringify(breadcrumb.getStack()))
+            },
+            'https://mitojs.github.io/mito-admin-demo/#/breadcrumbDemo'
+          )
       }
     }, 1000)
   },
