@@ -1,2 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2c649d8d"],{"09d0":function(n,t,e){"use strict";e.r(t);var c=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",{staticClass:"two"},[e("el-button",{on:{click:function(t){return n.$router.push({name:"one"})}}},[n._v("跳转到示例页面1")])],1)},u=[],o={name:"TwoList",data:function(){return{}},methods:{}},s=o,a=(e("fed4"),e("2877")),i=Object(a["a"])(s,c,u,!1,null,"a306ac26",null);t["default"]=i.exports},3869:function(n,t,e){},fed4:function(n,t,e){"use strict";e("3869")}}]);
-//# sourceMappingURL=chunk-2c649d8d.0f46e0fe.js.map
+//# sourceMappingURL=chunk-2c649d8d.64718ae5.js.map
