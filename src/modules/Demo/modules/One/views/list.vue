@@ -1,6 +1,6 @@
 <template lang="pug">
   .risk-assessment
-    div(style="font-size: 26px; color:#c6c6c6;") 请打开控制台查看mitojs的调式结果，当你操作页面时，控制台会打印你的行为
+    div(style="font-size: 26px; color:#c6c6c6;") 请打开控制台查看mitojs的调式结果，当你操作页面时，控制台会打印你的行为。在控制台输入「MitoInstance」查看当前mito实例
     div(style="font-size: 26px; color:#c6c6c6; margin-top: 20px;") 右边页面会实时打印的你操作行为
     div(style="font-size: 26px; padding: 20px 0 20px 0") count: {{ count }}
     .container

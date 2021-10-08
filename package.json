@@ -9,8 +9,8 @@
     "prettier": "prettier --write './*"
   },
   "dependencies": {
-    "@mitojs/browser": "^2.1.26",
-    "@mitojs/vue": "^2.1.26",
+    "@mitojs/browser": "^3.0.0",
+    "@mitojs/vue": "^3.0.0",
     "axios": "^0.18.0",
     "element-ui": "^2.13.2",
     "less-loader": "^6.2.0",

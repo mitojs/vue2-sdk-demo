@@ -19,7 +19,7 @@ const MitoInstance = init(
   },
   [vuePlugin]
 )
-window._MITO_ = MitoInstance
+window.MitoInstance = MitoInstance
 new Vue({
   router,
   store,
