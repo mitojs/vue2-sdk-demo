@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     let iframe = this.$refs.iframe
-    const breadcrumb = window._MITO_.breadcrumb
+    const breadcrumb = window.MitoInstance.breadcrumb
     let lastLength = -1
     setInterval(() => {
       const length = breadcrumb.getStack().length
