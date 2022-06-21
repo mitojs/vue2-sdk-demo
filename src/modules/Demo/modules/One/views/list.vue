@@ -43,7 +43,7 @@ export default {
     },
     async onClickGoodRequest() {
       // status 200
-      const res = await axios.get('https://api.apiopen.top/likePoetry?name=李白')
+      const res = await axios.get('https://api.apiopen.top/api/sentences')
       console.log('接口返回值：', res.data.message)
     },
     async onClickBadRequest() {
@@ -60,7 +60,7 @@ export default {
         })
     },
     async onClickFetch() {
-      const res = await fetch('https://api.apiopen.top/likePoetry?name=%E6%9D%8E%E7%99%BD', {
+      const res = await fetch('https://api.apiopen.top/api/sentences', {
         headers: {
           'Content-Type': 'application/json'
         }
