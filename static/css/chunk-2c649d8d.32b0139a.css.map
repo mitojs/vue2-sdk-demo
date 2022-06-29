@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///src/modules/Demo/modules/Two/views/list.vue","chunk-2c649d8d.32b0139a.css"],"names":[],"mappings":"AAgBA,sBACE,YCfF","file":"chunk-2c649d8d.32b0139a.css","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.two {\n  padding: 20px;\n}\n",".two[data-v-a306ac26] {\n  padding: 20px;\n}\n\n\n/*# sourceMappingURL=chunk-2c649d8d.32b0139a.css.map*/"]}
