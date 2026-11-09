@@ -16,7 +16,7 @@
         :aria-pressed="report.id === selectedId"
         @click="$emit('select', report.id)"
       >
-        <span class="report-monitor__type" :data-type="report.type">{{ report.badge }}</span>
+        <span class="report-monitor__type" :data-type="report.type" :data-error="String(report.isError)">{{ report.badge }}</span>
         <span
           class="report-monitor__summary"
         ><span class="report-monitor__title">{{ report.title }}</span><span class="report-monitor__location">{{ report.location }}</span></span>
@@ -26,7 +26,7 @@
           v-if="report.type === 'HTTP'"
         ><span
           class="report-monitor__outcome-top"
-        ><b class="report-monitor__status" :data-error="report.isError">{{ report.status }}</b><span class="report-monitor__duration">{{ report.duration }}</span></span><span class="report-monitor__source-detail">{{ report.source }}</span></template><template
+        ><b class="report-monitor__status" :data-error="String(report.isError)">{{ report.status }}</b><span class="report-monitor__duration">{{ report.duration }}</span></span><span class="report-monitor__source-detail">{{ report.source }}</span></template><template
           v-else
         ><span class="report-monitor__source">{{ report.source }}</span><span class="report-monitor__source-detail">{{ report.sourceDetail }}</span></template></span>
         <time class="report-monitor__time">{{ report.time }}</time>

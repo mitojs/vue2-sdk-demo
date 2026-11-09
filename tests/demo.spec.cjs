@@ -92,10 +92,21 @@ for (const [transport, httpType] of [['Fetch', 'fetch'], ['XHR', 'xhr']]) {
       await expect(row).toContainText('GET /api/' + endpoint)
       await expect(row).toContainText(transport)
       await expect(row.locator('.report-monitor__status')).toHaveText(String(status))
-      if (status === 500)
-        await expect(row.locator('.report-monitor__status')).toHaveAttribute('data-error', 'true')
-      else
-        await expect(row.locator('.report-monitor__status')).not.toHaveAttribute('data-error', 'true')
+      const colors = await row.evaluate((element) => {
+        const badge = getComputedStyle(element.querySelector('.report-monitor__type'))
+        const outcome = getComputedStyle(element.querySelector('.report-monitor__status'))
+        return [badge.color, badge.backgroundColor, outcome.color]
+      })
+      for (const color of colors) {
+        const [red, green, blue] = color.match(/\d+/g).map(Number)
+        if (status === 200) {
+          expect(green, color).toBeGreaterThan(red)
+          expect(green, color).toBeGreaterThan(blue)
+        } else {
+          expect(red, color).toBeGreaterThan(green)
+          expect(red, color).toBeGreaterThan(blue)
+        }
+      }
       await expect(row.locator('.report-monitor__duration')).toContainText(/\d+ ms/)
       await expect(page.locator('.report-monitor__details')).toContainText(message)
       await page.getByText('原始事件 JSON', { exact: true }).click()
