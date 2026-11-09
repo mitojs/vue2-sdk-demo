@@ -2,6 +2,8 @@
 
 Vue **2.7.16** 的浏览器监控示例，保持 Vue 2 major。左侧可触发日志、Vue 组件、Promise、JavaScript 与 Fetch/XHR 场景；右侧紧凑排查表显示完整真实上报、发生位置、请求结果和 JSON。计数器、路由与请求保留在行为轨迹中。
 
+正常与异常 Fetch/XHR 都会产生真实 HTTP 上报，记录各自的状态、来源、耗时与响应详情。
+
 上报使用真实 SDK POST，由同源 `public/localReceiver.js` Service Worker 在当前浏览器内接收并返回 HTTP 200。演示接口也在本地返回 200 或 500，无需后台服务。请通过 localhost 或 HTTPS 访问。
 
 ## 开发与验证

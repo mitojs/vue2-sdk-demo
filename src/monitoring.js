@@ -17,6 +17,14 @@ export function initializeMonitoring() {
       silentConsole: true,
       beforePushBreadcrumb(breadcrumb, entry) {
         state.breadcrumbs = breadcrumb.getStack().concat([entry]).slice(-50)
+        const data = entry.data
+        if (entry.category === 'http' && data && data.type === 'HTTP' &&
+          ['fetch', 'xhr'].includes(data.request.httpType) &&
+          data.response.status >= 200 && data.response.status < 400) {
+          queueMicrotask(() => {
+            monitoring.transport.send(data, breadcrumb.getStack().slice())
+          })
+        }
         return entry
       }
     },
@@ -45,7 +53,7 @@ export async function fetchRequest(failure) {
     const response = await fetch(apiURL + (failure ? 'failure' : 'success'))
     await response.json()
     state.notice = response.ok
-      ? 'Fetch 请求成功 · HTTP 200'
+      ? 'Fetch 请求成功 · HTTP 200，已采集并上报。'
       : 'Fetch 请求异常 · HTTP 500，已自动上报。'
   } catch (error) {
     state.notice = 'Fetch 请求未完成，请刷新页面重试。'
@@ -57,7 +65,7 @@ export function xhrRequest(failure) {
   xhr.addEventListener('loadend', () => {
     state.notice =
       xhr.status === 200
-        ? 'XHR 请求成功 · HTTP 200'
+        ? 'XHR 请求成功 · HTTP 200，已采集并上报。'
         : 'XHR 请求异常 · HTTP ' + xhr.status + '，已自动上报。'
   })
   xhr.send()

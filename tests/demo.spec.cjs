@@ -57,27 +57,56 @@ test('Vue, Promise and JavaScript exceptions produce real reports without stoppi
   await expect(page.getByTestId('counter')).toHaveText('1')
 })
 
-test('local Fetch and XHR distinguish 200 from 500 and expose independent request summaries', async ({
-  page
-}) => {
-  for (const [transport, previousCount] of [['Fetch', 0], ['XHR', 1]]) {
-    const success = page.waitForResponse((response) => response.url().endsWith('/api/success'))
-    await page.getByRole('button', { name: '正常 ' + transport, exact: true }).click()
-    expect((await success).status()).toBe(200)
-    await expect(page.locator('.report-monitor__row')).toHaveCount(previousCount)
-    const failure = page.waitForResponse((response) => response.url().endsWith('/api/failure'))
-    const post = page.waitForResponse((response) => response.url().endsWith('/api/report'))
-    await page.getByRole('button', { name: '异常 ' + transport, exact: true }).click()
-    expect((await failure).status()).toBe(500)
-    expect((await post).status()).toBe(200)
-    const row = page.locator('.report-monitor__row[aria-pressed="true"]')
-    await expect(row).toContainText('GET /api/failure')
-    await expect(row).toContainText(transport)
-    await expect(row.locator('.report-monitor__status')).toHaveText('500')
-    await expect(row.locator('.report-monitor__duration')).toContainText(/\d+ ms/)
-  }
-  await expect(page.locator('.report-monitor__row')).toHaveCount(2)
-})
+for (const [transport, httpType] of [['Fetch', 'fetch'], ['XHR', 'xhr']]) {
+  test(`${transport} success and failure requests produce real HTTP reports`, async ({ page }) => {
+    const uploads = []
+    page.on('request', (request) => {
+      if (request.url().endsWith('/api/report') && request.method() === 'POST')
+        uploads.push(request.postDataJSON())
+    })
+    for (const [button, endpoint, status, count, message] of [
+      ['正常 ', 'success', 200, 1, '本地演示请求已完成'],
+      ['异常 ', 'failure', 500, 2, '本地演示服务暂不可用']
+    ]) {
+      const [response, report] = await Promise.all([
+        page.waitForResponse((result) => result.url().endsWith('/api/' + endpoint)),
+        page.waitForResponse((result) => {
+          if (!result.url().endsWith('/api/report') || result.request().method() !== 'POST')
+            return false
+          const payload = result.request().postDataJSON()
+          return payload.data.type === 'HTTP' && payload.data.request.httpType === httpType &&
+            payload.data.request.url.endsWith('/api/' + endpoint)
+        }, { timeout: 5000 }),
+        page.getByRole('button', { name: button + transport, exact: true }).click()
+      ])
+      expect(response.status()).toBe(status)
+      expect(report.status()).toBe(200)
+      expect(report.fromServiceWorker()).toBe(true)
+      const payload = report.request().postDataJSON()
+      expect(payload.authInfo.sdkVersion).toBe('4.0.0')
+      expect(payload.data.request.method).toBe('GET')
+      expect(payload.data.response.status).toBe(status)
+      expect(JSON.parse(payload.data.response.data).message).toBe(message)
+      await expect(page.locator('.report-monitor__row')).toHaveCount(count)
+      const row = page.locator('.report-monitor__row[aria-pressed="true"]')
+      await expect(row).toContainText('GET /api/' + endpoint)
+      await expect(row).toContainText(transport)
+      await expect(row.locator('.report-monitor__status')).toHaveText(String(status))
+      if (status === 500)
+        await expect(row.locator('.report-monitor__status')).toHaveAttribute('data-error', 'true')
+      else
+        await expect(row.locator('.report-monitor__status')).not.toHaveAttribute('data-error', 'true')
+      await expect(row.locator('.report-monitor__duration')).toContainText(/\d+ ms/)
+      await expect(page.locator('.report-monitor__details')).toContainText(message)
+      await page.getByText('原始事件 JSON', { exact: true }).click()
+      await expect(page.getByTestId('report-detail')).toHaveText(JSON.stringify(payload, null, 2))
+      expect(uploads).toHaveLength(count)
+      expect(uploads.map((upload) => upload.data.response.status)).toEqual(
+        status === 200 ? [200] : [200, 500]
+      )
+    }
+  })
+}
 
 test('search uses only the current event and selection follows visible reports', async ({
   page
