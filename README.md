@@ -34,7 +34,7 @@ DEMO_URL=http://localhost:2032/ pnpm test
 
 使用 **Vite 7.3.7 + 官方 `@vitejs/plugin-vue2` 2.3.4**。插件的 peer 范围要求 Vue `^2.7.0-0`，支持 Vite 3–7，因此把旧的 Vue 2.6 更新到 2.7.16，仍然使用 Vue 2 的 Options API 和 Vue Router 3。Vite 7 的 Node 要求为 `^20.19.0 || >=22.12.0`，Node 24 满足要求。项目已移除 Vue CLI 3、Webpack 4、node-sass 及未使用的旧后台壳，不需要旧 Node、OpenSSL 参数或强制 peer 安装。[官方 Vue 2.7 迁移说明](https://v2.vuejs.org/v2/guide/migration-vue-2-7.html)、[官方 Vue2 Vite 插件](https://github.com/vitejs/vite-plugin-vue2)。
 
-SDK 依赖是实际发布的 `4.0.0-beta.1`（`@mitojs/shared` 是 `4.0.0-beta.0`）；JSON 保留 SDK 实际生成的所有字段，不覆写其中的版本值。
+SDK 依赖是实际发布的正式版 `4.0.0`，包括传递依赖 `@mitojs/shared`；JSON 保留 SDK 实际生成的所有字段，不覆写其中的版本值。
 
 ## 持续集成与发布
 

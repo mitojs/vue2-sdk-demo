@@ -17,6 +17,7 @@ test('local SDK POST becomes a selectable report with its complete payload', asy
   expect(response.status()).toBe(200)
   expect(response.fromServiceWorker()).toBe(true)
   const payload = response.request().postDataJSON()
+  expect(payload.authInfo.sdkVersion).toBe('4.0.0')
   expect(payload.data.type).toBe('LOG')
   expect(payload.data.customTag).toBe('vue2-demo')
   await expect(page.locator('.report-monitor__row')).toHaveCount(1)
