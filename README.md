@@ -38,7 +38,7 @@ SDK 依赖是实际发布的正式版 `4.0.0`，包括传递依赖 `@mitojs/shar
 
 ## 持续集成与发布
 
-`.github/workflows/gh-pages.yml` 对 Pull Request 和 master 推送运行相同的 Node 24/pnpm 冻结安装、lint、构建和完整测试。Pull Request 只验证；验证通过后，只有 master 推送会使用部署步骤中的 `CI_TOKEN`，沿用 `docs/` 发布到 Pages 分支。
+`.github/workflows/gh-pages.yml` 对 Pull Request 和 master 推送运行相同的 Node 24/pnpm 冻结安装、lint、构建和完整测试。此工作流只验证；GitHub Pages 按仓库设置自动从 `master` 分支的 `docs/` 目录发布，无需额外推送 Pages 分支或配置部署 token。
 
 ## 代码结构
 

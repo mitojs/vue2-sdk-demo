@@ -1,4 +1,4 @@
-name: Verify Vue 2 demo and deploy Pages
+name: Verify Vue 2 demo
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  verify-and-deploy:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
@@ -33,11 +33,3 @@ jobs:
           name: vue2-browser-failure
           path: test-results
           if-no-files-found: ignore
-      - name: Deploy docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: peaceiris/actions-gh-pages@v4
-        env:
-          CI_TOKEN: ${{ secrets.CI_TOKEN }}
-        with:
-          github_token: ${{ env.CI_TOKEN }}
-          publish_dir: ./docs
