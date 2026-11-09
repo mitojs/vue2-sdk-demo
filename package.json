@@ -3,62 +3,33 @@
   "version": "1.1.7",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "prettier": "prettier --write './*"
+    "dev": "vite --host 127.0.0.1 --port 2037 --strictPort",
+    "build": "vite build",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --test tests/report-model.test.mjs && playwright test",
+    "verify": "pnpm lint && pnpm build && pnpm test",
+    "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
-    "@mitojs/browser": "^3.0.0",
-    "@mitojs/vue": "^3.0.0",
-    "axios": "^0.18.0",
-    "element-ui": "^2.13.2",
-    "less-loader": "^6.2.0",
-    "normalize.css": "^8.0.1",
-    "vue": "^2.6.12",
-    "vue-router": "^3.4.3",
-    "vuex": "^3.5.1"
+    "@mitojs/browser": "4.0.0",
+    "@mitojs/vue": "4.0.0",
+    "vue": "2.7.16",
+    "vue-router": "3.5.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-config-google": "^0.13.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^5.2.3",
-    "node-sass": "^4.14.1",
-    "prettier": "2.0.5",
-    "sass-loader": "^9.0.3",
-    "vue-cli-plugin-pug": "^1.0.7",
-    "vue-template-compiler": "^2.6.12"
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
+    "@vitejs/plugin-vue2": "2.3.4",
+    "eslint": "10.14.0",
+    "eslint-plugin-vue": "10.12.0",
+    "globals": "17.14.0",
+    "vite": "7.3.7",
+    "vue-eslint-parser": "10.4.2"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "packageManager": "pnpm@12.16.1",
+  "type": "module",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=12.16.1 <13"
+  }
 }

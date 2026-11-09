@@ -1,0 +1,12 @@
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue2'
+
+export default defineConfig({
+  base: './',
+  plugins: [vue()],
+  build: {
+    outDir: 'docs',
+    assetsDir: 'static',
+    sourcemap: true
+  }
+})

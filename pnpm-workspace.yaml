@@ -1,0 +1,13 @@
+packages:
+  - .
+
+allowBuilds:
+  esbuild: true
+
+minimumReleaseAgeExclude:
+  - '@mitojs/browser@4.0.0'
+  - '@mitojs/core@4.0.0'
+  - '@mitojs/shared@4.0.0'
+  - '@mitojs/types@4.0.0'
+  - '@mitojs/utils@4.0.0'
+  - '@mitojs/vue@4.0.0'

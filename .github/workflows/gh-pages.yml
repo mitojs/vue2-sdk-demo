@@ -1,20 +1,43 @@
-name: github pages
+name: Verify Vue 2 demo and deploy Pages
 
 on:
+  pull_request:
   push:
-    branches:
-      - master # default branch
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  verify-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: npm install --global yarn
-      - run: yarn
-      - run: yarn run build
-      - name: Deploy docs
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/checkout@v7.0.1
+      - name: Use Node 24 for installation, build and tests
+        uses: actions/setup-node@v7.1.0
         with:
-          github_token: ${{ secrets.CI_TOKEN }}
+          node-version-file: .node-version
+      - uses: pnpm/action-setup@v6.1.1
+        with:
+          version: 12.16.1
+          cache: true
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps --no-shell chromium
+      - run: pnpm test
+      - name: Retain browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vue2-browser-failure
+          path: test-results
+          if-no-files-found: ignore
+      - name: Deploy docs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v4
+        env:
+          CI_TOKEN: ${{ secrets.CI_TOKEN }}
+        with:
+          github_token: ${{ env.CI_TOKEN }}
           publish_dir: ./docs
