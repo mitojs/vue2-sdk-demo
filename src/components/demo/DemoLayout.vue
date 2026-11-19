@@ -47,7 +47,7 @@
           <slot />
         </div>
         <footer class="page-footer">
-          <span>用更清晰的上下文，理解每一个前端问题。</span><a
+          <nav aria-label="其他框架演示"><a href="https://mitojs.github.io/react-sdk-demo/">React 19 SDK 演示</a> · <a href="https://mitojs.github.io/vue3-sdk-demo/">Vue 3 SDK 演示</a></nav><a
             href="https://github.com/mitojs/mitojs"
             target="_blank"
             rel="noreferrer"
